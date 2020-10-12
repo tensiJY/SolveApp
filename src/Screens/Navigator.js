@@ -7,7 +7,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
+//  메인
 import Main from './Main';
+
+//  문제등록
+import Registger from './Main/Register'
+
 import SecondPage from './pages/SecondPage';
 import ThirdPage from './pages/ThirdPage';
 
@@ -62,6 +67,30 @@ const MainScreenStack=({navigation})=>{
   );
 }
 
+const RegisterScreenStack=({navigation})=>{
+  return(
+    <Stack.Navigator initialRouteName="Register">
+      <Stack.Screen
+        name="Register"
+        component={Registger}
+        options={{
+          title: '문제등록', //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#f4511e', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+    </Stack.Navigator>
+  )
+}
+
 const secondScreenStack=({navigation})=> {
   return (
     <Stack.Navigator
@@ -109,6 +138,13 @@ const MainNavigator =()=>{
           options={{drawerLabel: 'Main'}}
           component={MainScreenStack}
         />
+
+        <Drawer.Screen
+          name="Register"
+          options={{drawerLabel: '문제등록'}}
+          component={RegisterScreenStack}
+        />
+
         <Drawer.Screen
           name="SecondPage"
           options={{drawerLabel: 'Second page Option'}}

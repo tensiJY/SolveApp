@@ -1,22 +1,64 @@
 import React from 'react';
-import {Button, View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import {Button, View, Text, SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native';
 
-
-
+//#f7a7bb;
 const Main = ({navigation}) =>{
   return(
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.safeAreaViewcontainer}>
       
+      <View style={styles.outerViewContainer}>
+        <TouchableOpacity style={styles.innerViewContainer} onPress={()=>{console.log(1)}}>
+          <Text>문제풀기</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.innerViewContainer}>
+          <Text>즐겨찾기</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.outerViewContainer}>
+        <TouchableOpacity style={styles.innerViewContainer}>
+          <Text>연습문제</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity style={styles.innerViewContainer} onPress={()=>{navigation.navigate('Register')}}>
+          <Text>문제등록</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.outerViewContainer}>
+        <TouchableOpacity style={styles.innerViewContainer}>
+
+          <Text>내정보</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.innerViewContainer}>
+          <Text>설정</Text>
+        </TouchableOpacity>
+      </View>
 
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex : 1
+  safeAreaViewcontainer: {
+    flex : 1,
   },
+  outerViewContainer : {
+    flex : 1,
+    flexDirection : 'row',
+    
+  },
+  innerViewContainer : {
+    flex : 1,
+    justifyContent : 'center',
+    alignItems : 'center',
+    borderWidth : 1
+  }
 });
+
+export default Main;
 
 const FirstPage = ({navigation}) => {
   return (
@@ -56,4 +98,4 @@ const FirstPage = ({navigation}) => {
   );
 };
 
-export default FirstPage;
+//export default FirstPage;
