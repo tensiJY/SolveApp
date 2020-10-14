@@ -15,18 +15,20 @@ import {
 
 import Loding from '../../../Components/Loding';
 
+import Api from '../../../Components/Utils/Api';
+
 const Register = ({navigation})=>{
 
     const [isLoding, setIsLoding] = useState(false);
 
     //  문제 질문
-    const [title, setTitle] = useState();
+    const [title, setTitle] = useState(null);
     //  보기 1~5
-    const [detailCnt, setDetailCnt] = useState(3);   
+    const [detailCnt, setDetailCnt] = useState(4);   
     //  보기 내용
-    const [detail, setDetail] = useState([null,null,null]);
+    const [detail, setDetail] = useState([null,null,null,null]);
     //  정답 번호
-    const [answer, setAnswer] = useState();
+    const [answer, setAnswer] = useState(null);
 
     //  질문 
     const addTitle = (arg)=>{
@@ -47,8 +49,8 @@ const Register = ({navigation})=>{
 
     //  보기 삭제   //  
     const delDetailCnt = ()=>{
-        if(detailCnt == 3){
-            return Alert.alert('보기는 최소 3개입니다.');
+        if(detailCnt == 4){
+            return Alert.alert('보기는 최소 4개입니다.');
         }
         let a = detail;
         a.splice(detail.length-1, 1);
@@ -76,8 +78,26 @@ const Register = ({navigation})=>{
     const confirm = ()=>{
         //  질문 체크, 보기 체크, 정답 체크
         if(title==null || title.trim()==""){
-            return Alert.alert('');
+            return Alert.alert('질문을 작성해주시기 바랍니다.');
         }
+        
+        for(let i=0; i<detailCnt; i++){
+            let d = detail[i];
+            if(d == null || d.trim()==""){
+                return Alert.alert(`${i+1}번 보기를 작성해주시기 바랍니다`);
+            }
+        }
+
+        //console.log(typeof answer)
+        
+        if(answer>detailCnt || answer == null || answer==0 || answer.trim()==''){
+            return Alert.alert('정답을 제대로 입력해주시기 바랍니다.');
+        }
+
+        if(typeof answer != 'number'){
+            return Alert.alert('정답을 제대로 입력해주시기 바랍니다.');
+        }
+        
 
         Alert.alert( 
             "문제를 등록 하시겠습니까?", 
@@ -95,20 +115,43 @@ const Register = ({navigation})=>{
     }
 
     //  저장
-    const saveRegister = () =>{
-        setIsLoding(false);
-        console.log(1)
+    const saveRegister = async () =>{
+       
 
-        setTimeout(()=>{
-            setIsLoding(true)
-        }, 5000)
+        setIsLoding(false);
+        let dataObj = {};
+        dataObj.reg_title = title;      //  제목
+        dataObj.reg_cnt = detailCnt;    //  총 몇 문항인지..
+        dataObj.reg_answer = answer;    //  정답 문항
+        dataObj.reg_dtl1 = detail[0];
+        dataObj.reg_dtl2 = detail[1];
+        dataObj.reg_dtl3 = detail[2];
+        dataObj.reg_dtl4 = detail[3];
+        dataObj.reg_dtl5 = detailCnt ==5 ?  detail[4] : null;
+
+        const res = await Api.regInsert(dataObj);
+
+        if(res.result_code == 1){
+            Alert.alert('저장에 성공하였습니다');
+        }
+
+        //  문제 질문
+        setTitle(null);
+        setDetailCnt(4);
+        setDetail([null,null,null,null]);
+        setAnswer(null);
+    
+        setIsLoding(true);
     }
 
     //  초기화 함수
-    useEffect(()=>{
-        console.log('useEffect')
+    useEffect(  ()=>{
+      
         setIsLoding(true);
+        
     },[])
+
+    
 
     //  로딩!
     if(isLoding==false){
