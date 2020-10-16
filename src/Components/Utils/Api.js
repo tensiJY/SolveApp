@@ -15,7 +15,8 @@ myApp.namespace = function(ns_string) {
 myApp.namespace('myApp.modules.api'); 
 myApp.modules.api = function() { 
     
-    const _url = 'http://192.168.0.20:8080/kr';
+    //const _url = 'http://192.168.0.20:8080/kr';
+    const _url = 'http://192.168.100.111:8080/kr'
     
     const _asyncApiCall = async( url)=>{
         let _res;
@@ -30,6 +31,10 @@ myApp.modules.api = function() {
             console.log(_url);
             console.log(_data);
             console.log(e);
+            _data = {};
+            _data.result_code = 0;
+            _data.is_error = true;
+            _data.error_msg = '서버 전송 실패에 실패하였습니다';
         }
 
         return _data;
