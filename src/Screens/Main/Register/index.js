@@ -22,13 +22,13 @@ const Register = ({navigation})=>{
     const [isLoding, setIsLoding] = useState(false);
 
     //  문제 질문
-    const [title, setTitle] = useState(null);
+    const [title, setTitle] = useState();
     //  보기 1~5
-    const [detailCnt, setDetailCnt] = useState(4);   
+    const [detailCnt, setDetailCnt] = useState();   
     //  보기 내용
-    const [detail, setDetail] = useState([null,null,null,null]);
+    const [detail, setDetail] = useState();
     //  정답 번호
-    const [answer, setAnswer] = useState(null);
+    const [answer, setAnswer] = useState();
 
     //  질문 
     const addTitle = (arg)=>{
@@ -94,7 +94,8 @@ const Register = ({navigation})=>{
             return Alert.alert('정답을 제대로 입력해주시기 바랍니다.');
         }
 
-        if(typeof answer != 'number'){
+        
+        if(isNaN(answer)){
             return Alert.alert('정답을 제대로 입력해주시기 바랍니다.');
         }
         
@@ -133,25 +134,32 @@ const Register = ({navigation})=>{
 
         if(res.result_code == 1){
             Alert.alert('저장에 성공하였습니다');
+        }else{
+            if(res.error_msg != null){
+                Alert.alert(res.error_msg);
+            }
         }
 
+        init();
+        
+        setIsLoding(true);
+    }
+
+    const init = () => {
         //  문제 질문
         setTitle(null);
         setDetailCnt(4);
         setDetail([null,null,null,null]);
         setAnswer(null);
     
-        setIsLoding(true);
     }
 
     //  초기화 함수
     useEffect(  ()=>{
-      
+        init();
         setIsLoding(true);
         
     },[])
-
-    
 
     //  로딩!
     if(isLoding==false){
