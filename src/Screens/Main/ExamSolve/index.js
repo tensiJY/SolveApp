@@ -1,5 +1,5 @@
 /**
- * 오늘의 문제 풀기
+ * 연습 문제 풀기
  */
 import React,{ useState, useEffect} from 'react';
 import {FlatList, SafeAreaView, 
@@ -12,7 +12,7 @@ import Loding from '../../../Components/Loding';
 import Api from '../../../Components/Utils/Api';
 import ExamTab from '../Common/ExamTab'
 
-const Solve = ({navigation}) =>{
+const ExamSolve = ({navigation}) =>{
     const [loding, setLoding] = useState(false);
     
     const [nowPage, setNowPage] = useState(1);
@@ -24,33 +24,40 @@ const Solve = ({navigation}) =>{
     const [tabIdx, setTabIdx] = useState();
 
     const [isShow, setIsShow] = useState(false);
+
+    const [totalPage, setTotalPage] = useState(1);
     
     
-    const init = ()=>{
+    const init = async()=>{
         setIsFale(false);
         setLoding(false);
         setNowPage(1);
         setExamList([]);
         setTabIdx(0);
         setIsShow(false);
-        
-        
-        getData(nowPage);
+        setTotalPage(1)
+
+        getData(nowPage, 0);
     }
 
-    const getData = async( page )=>{
+    const getData = async( page, tab )=>{
         //console.log('eaxm : ' , page)
         let _objData = {};
         _objData.nowPage = page;
         let _res = null;
        
-        _res = await Api.getRegList(_objData);
+        _res = await Api.getExamList(_objData);
         
         if(_res.result_code == 1){
-          
-            setExamList(_res.data_list);
-            setTabIdx(0);
             
+            let l = examList;
+            //console.log(_res.nowPage)
+            setNowPage(_res.now_page);
+            setExamList([...l, ..._res.data_list]);
+            setTotalPage(_res.total_page);
+            setTabIdx(tab);
+            
+            //console.log(nowPage)
             
         }else{
             setIsFale(true);
@@ -61,24 +68,21 @@ const Solve = ({navigation}) =>{
     }
 
     useEffect(() => {
-        const initUseEffect = navigation.addListener('focus', () => {
-            init();       
-            
-        });
-    
-
-        return initUseEffect;
-    }, [navigation]);
+       init();
+    }, []);
     
     const prevView = ()=>{
       
+        //console.log(tabIdx)
+
         if(examList.length-1 == 0){
 
         }else{
             setIsShow(false);
             let t = tabIdx;
             t = t-1
-            setTabIdx(t)
+            setTabIdx(t);
+            
         }
     }
 
@@ -91,7 +95,23 @@ const Solve = ({navigation}) =>{
             setIsShow(false);
             let t = tabIdx;
             t = t+1
-            setTabIdx(t);
+            
+            if(t == examList.length-3){
+                
+                let n = nowPage;
+                
+                if(nowPage == totalPage){
+                        setTabIdx(t)            
+                }else if(nowPage <totalPage){
+                        //  화면이 랜더링 되기때문에 false를 삭제한다.
+                        //setLoding(false); 
+                    n = n+1;
+                    getData(n,t);
+                }
+                    
+            }else{
+                setTabIdx(t)
+            }
         }
     }
 
@@ -135,7 +155,7 @@ const Solve = ({navigation}) =>{
                     showBtn={()=>{showBtn()}}
                     isShow={isShow}
                     favo={()=>favoBtn()}
-                    type={'solve'}
+                    type='exam'
                 />
 
             }
@@ -150,4 +170,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Solve;
+export default ExamSolve;

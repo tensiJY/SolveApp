@@ -15,8 +15,16 @@ myApp.namespace = function(ns_string) {
 myApp.namespace('myApp.modules.api'); 
 myApp.modules.api = function() { 
     
-    //const _url = 'http://192.168.0.20:8080/kr';
-    const _url = 'http://192.168.100.111:8080/kr'
+    const _url = 'http://192.168.0.20:8080/kr';
+    //const _url = 'http://192.168.100.111:8080/kr'
+
+    let _options = { 
+        method: 'POST'
+        , headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        }
+        ,body: {} //body : JSON.stringify({'title': input.value})  //  바디는 구현 해주어야 한다.
+    }
     
     const _asyncApiCall = async( url)=>{
         let _res;
@@ -34,12 +42,36 @@ myApp.modules.api = function() {
             _data = {};
             _data.result_code = 0;
             _data.is_error = true;
-            _data.error_msg = '서버 전송 실패에 실패하였습니다';
+            _data.error_msg = '서버와의 전송을 실패에 실패하였습니다';
         }
 
         return _data;
     }
 
+
+    const _asyncApiCallPost = async( url , option)=>{
+        let _res;
+        let _data;
+        
+        try{
+            _res = await fetch(url, option);
+            _data = await _res.json();
+            //console.log('url : ', _data);
+        }catch(e){
+            console.log('api call error');
+            console.log(url);
+            console.log(_data);
+            console.log(e);
+            _data = {};
+            _data.result_code = 0;
+            _data.is_error = true;
+            _data.error_msg = '서버와의 전송을 실패에 실패하였습니다';
+        }
+
+        return _data;
+    }
+
+    //////////////////////////////////////////
     /**
      * "a=1&b=2"
      * @param {*} data 
@@ -63,23 +95,44 @@ myApp.modules.api = function() {
     // 특권 메서드가 들어있는 객체를 반환 
     /**
      * 문제를 등록하는 함수
-     * @param {*} _data 
+     * @param {*} data 
      */
-    const _regInsert = async( _data ) => {
+    const _regInsert = async( data ) => {
         let _u = _url+'/reg/insert?'
-        let _str = _getQueryStr(_data);
+        let _str = _getQueryStr(data);
 
         const _res = await _asyncApiCall(_u + _str)
 
         return _res;
     }
     
+    /**
+     * 연습 문제 가져오기
+     */
+    const _getExamList = async ( data) => {
+        let _u = _url+'/reg/getExList';
+        _options.body = JSON.stringify(data);
+        
+        const _res = await _asyncApiCallPost(_u, _options);
+        return _res;
+    }
     
-	
+    /**
+     * 오늘의 문제 가져오기
+     */
+	const _getRegList = async (data) => {
+        let _u = _url+'/reg/getRegList';
+        _options.body = JSON.stringify(data);
+        
+        const _res = await _asyncApiCallPost(_u, _options);
+        return _res;
+    }
 	
 	return { 
         //asyncApiCall : _asyncApiCall    //  동기
-        regInsert : _regInsert
+        regInsert : _regInsert,
+        getExamList : _getExamList,
+        getRegList:_getRegList
 	}; 
 }();
 
