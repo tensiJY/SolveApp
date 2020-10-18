@@ -7,8 +7,8 @@ const Main = ({navigation}) =>{
     <SafeAreaView style={styles.safeAreaViewcontainer}>
       
       <View style={styles.outerViewContainer}>
-        <TouchableOpacity style={styles.innerViewContainer} onPress={()=>{console.log(1)}}>
-          <Text>문제풀기</Text>
+        <TouchableOpacity style={styles.innerViewContainer} onPress={()=>{navigation.navigate("Solve")}}>
+          <Text>오늘의 문제</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.innerViewContainer}>
@@ -17,7 +17,7 @@ const Main = ({navigation}) =>{
       </View>
 
       <View style={styles.outerViewContainer}>
-        <TouchableOpacity style={styles.innerViewContainer}>
+        <TouchableOpacity style={styles.innerViewContainer} onPress={()=>{navigation.navigate("ExamSolve")}}>
           <Text>연습문제</Text>
         </TouchableOpacity>
         

@@ -19,7 +19,7 @@ import Api from '../../../Components/Utils/Api';
 
 const Register = ({navigation})=>{
 
-    const [isLoding, setIsLoding] = useState(false);
+    const [loding, setLoding] = useState(false);
 
     //  문제 질문
     const [title, setTitle] = useState();
@@ -119,7 +119,7 @@ const Register = ({navigation})=>{
     const saveRegister = async () =>{
        
 
-        setIsLoding(false);
+        setLoding(false);
         let dataObj = {};
         dataObj.reg_title = title;      //  제목
         dataObj.reg_cnt = detailCnt;    //  총 몇 문항인지..
@@ -142,7 +142,7 @@ const Register = ({navigation})=>{
 
         init();
         
-        setIsLoding(true);
+        setLoding(true);
     }
 
     const init = () => {
@@ -157,12 +157,12 @@ const Register = ({navigation})=>{
     //  초기화 함수
     useEffect(  ()=>{
         init();
-        setIsLoding(true);
+        setLoding(true);
         
     },[])
 
     //  로딩!
-    if(isLoding==false){
+    if(loding==false){
         return(
             <Loding />
         )

@@ -7,11 +7,18 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
+
 //  메인
 import Main from './Main';
 
+//  오늘의 문제
+import Solve from './Main/Solve'
+
 //  문제등록
 import Registger from './Main/Register'
+
+//  연습문제
+import ExamSolve from './Main/ExamSolve'
 
 import SecondPage from './pages/SecondPage';
 import ThirdPage from './pages/ThirdPage';
@@ -66,6 +73,55 @@ const MainScreenStack=({navigation})=>{
     </Stack.Navigator>
   );
 }
+
+const SolveScreenStack=({navigation})=>{
+  return (
+    <Stack.Navigator initialRouteName="Solve">
+      <Stack.Screen
+        name="Solve"
+        component={Solve}
+        options={{
+          title: '오늘의 문제', //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#f4511e', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+const ExamSolveScreenStack=({navigation})=>{
+  return (
+    <Stack.Navigator initialRouteName="ExamSolve">
+      <Stack.Screen
+        name="ExamSolve"
+        component={ExamSolve}
+        options={{
+          title: '연습문제', //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#f4511e', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 
 const RegisterScreenStack=({navigation})=>{
   return(
@@ -140,6 +196,18 @@ const MainNavigator =()=>{
         />
 
         <Drawer.Screen
+          name="Solve"
+          options={{drawerLabel: '오늘의문제'}}
+          component={SolveScreenStack}
+        />
+
+        <Drawer.Screen
+          name="ExamSolve"
+          options={{drawerLabel: '연습문제'}}
+          component={ExamSolveScreenStack}
+        />
+
+        <Drawer.Screen
           name="Register"
           options={{drawerLabel: '문제등록'}}
           component={RegisterScreenStack}
@@ -164,7 +232,7 @@ const LoginNavigator = ()=>{
 }
 
 const Navigator = ()=>{
-  const isUserInfo = true
+  const isUserInfo = true;
 
   return(
     <NavigationContainer>
