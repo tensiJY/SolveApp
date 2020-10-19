@@ -126,6 +126,11 @@ const Solve = ({navigation}) =>{
             }
             {isFale == false &&
 
+                examList.length == 0? 
+                <View>
+                    <Text>데이터가 없습니다.</Text>
+                </View>
+                :
                 <ExamTab 
                     data={examList[tabIdx]}
                     prevBtn={()=>{prevView()}}

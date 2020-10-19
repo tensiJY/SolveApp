@@ -11,7 +11,7 @@ const Main = ({navigation}) =>{
           <Text>오늘의 문제</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.innerViewContainer}>
+        <TouchableOpacity style={styles.innerViewContainer}onPress={()=>navigation.navigate('Favor')}> 
           <Text>즐겨찾기</Text>
         </TouchableOpacity>
       </View>

@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {View, TouchableOpacity, Image, Text} from 'react-native';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, CommonActions } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
@@ -15,10 +15,14 @@ import Main from './Main';
 import Solve from './Main/Solve'
 
 //  문제등록
-import Registger from './Main/Register'
+import Registger from './Main/Register';
 
 //  연습문제
-import ExamSolve from './Main/ExamSolve'
+import ExamSolve from './Main/ExamSolve';
+
+//  즐겨찾기
+import Favor from './Main/Favor';
+
 
 import SecondPage from './pages/SecondPage';
 import ThirdPage from './pages/ThirdPage';
@@ -147,6 +151,32 @@ const RegisterScreenStack=({navigation})=>{
   )
 }
 
+const FavorScreenStack=({navigation})=>{
+  return(
+    <Stack.Navigator initialRouteName="Favor">
+      <Stack.Screen
+        name="Favor"
+        component={Favor}
+        options={{
+          title: '즐겨찾기', //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#f4511e', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+
+    </Stack.Navigator>
+  )
+}
+
+
 const secondScreenStack=({navigation})=> {
   return (
     <Stack.Navigator
@@ -199,6 +229,12 @@ const MainNavigator =()=>{
           name="Solve"
           options={{drawerLabel: '오늘의문제'}}
           component={SolveScreenStack}
+        />
+
+        <Drawer.Screen
+          name="Favor"
+          options={{drawerLabel: '즐겨찾기'}}
+          component={FavorScreenStack}
         />
 
         <Drawer.Screen
