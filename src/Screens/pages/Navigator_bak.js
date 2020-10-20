@@ -23,9 +23,6 @@ import ExamSolve from './Main/ExamSolve';
 //  즐겨찾기
 import Favor from './Main/Favor';
 
-//  즐겨찾기 > 문제 타입 리스트
-import FavorList from './Main/Favor/FavorList';
-
 
 import SecondPage from './pages/SecondPage';
 import ThirdPage from './pages/ThirdPage';
@@ -176,23 +173,6 @@ const FavorScreenStack=({navigation})=>{
         }}
       />
 
-    <Stack.Screen
-        name="FavorList"
-        component={FavorList}
-        options={{
-          title: '즐겨찾기', //Set Header Title
-          headerLeft: () => (
-            <NavigationDrawerStructure navigationProps={navigation} />
-          ),
-          headerStyle: {
-            backgroundColor: '#f4511e', //Set Header color
-          },
-          headerTintColor: '#fff', //Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold', //Set Header text style
-          },
-        }}
-      />
     </Stack.Navigator>
   )
 }
@@ -242,7 +222,7 @@ const MainNavigator =()=>{
         }}>
         <Drawer.Screen
           name="Main"
-          options={{drawerLabel: 'Home'}}
+          options={{drawerLabel: 'Main'}}
           component={MainScreenStack}
         />
 
