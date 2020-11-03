@@ -52,7 +52,7 @@ const FavorItem = ({sType, sText,sTitle, onPress})=>{
 
 const Favor = ({navigation})=>{
     const moveScreen = (obj)=>{
-        
+        console.log(obj)
         navigation.navigate('FavorList', obj);
     }
 
