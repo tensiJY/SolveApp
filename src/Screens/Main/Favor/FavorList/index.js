@@ -9,7 +9,7 @@ SQLite.DEBUG(true);
 const db = SQLite.openDatabase(
     {
       name: 'solveProblem.db',
-      createFromLocation:  '~ www / solveProblem.db',
+      createFromLocation:  '~www/solveProblem.db',
       location: 'Library',
     }
   );
