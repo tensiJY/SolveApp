@@ -26,6 +26,9 @@ import Favor from './Main/Favor';
 //  즐겨찾기 > 문제 타입 리스트
 import FavorList from './Main/Favor/FavorList';
 
+//  설정
+import Set from './Main/Set';
+
 
 import SecondPage from './pages/SecondPage';
 import ThirdPage from './pages/ThirdPage';
@@ -130,6 +133,29 @@ const ExamSolveScreenStack=({navigation})=>{
   );
 }
 
+const SetScreenStack=({navigation})=>{
+  return (
+    <Stack.Navigator initialRouteName="Set">
+      <Stack.Screen
+        name="Set"
+        component={Set}
+        options={{
+          title: '설정', //Set Header Title
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerStyle: {
+            backgroundColor: '#f4511e', //Set Header color
+          },
+          headerTintColor: '#fff', //Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold', //Set Header text style
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 const RegisterScreenStack=({navigation})=>{
   return(
@@ -268,6 +294,12 @@ const MainNavigator =()=>{
           name="Register"
           options={{drawerLabel: '문제등록'}}
           component={RegisterScreenStack}
+        />
+
+        <Drawer.Screen
+          name="Set"
+          options={{drawerLabel: '설정'}}
+          component={SetScreenStack}
         />
 
         <Drawer.Screen

@@ -32,7 +32,7 @@ const Main = ({navigation}) =>{
           <Text>내정보</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.innerViewContainer}>
+        <TouchableOpacity style={styles.innerViewContainer} onPress={()=>{navigation.navigate('Set')}}>
           <Text>설정</Text>
         </TouchableOpacity>
       </View>
