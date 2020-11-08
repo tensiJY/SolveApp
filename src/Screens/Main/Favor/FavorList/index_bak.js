@@ -4,24 +4,26 @@ import {SafeAreaView, FlatList, View, Text, StyleSheet, Alert, Image, TouchableO
 import SQLite from 'react-native-sqlite-storage';
 
 
+SQLite.DEBUG(true);
+//SQLite.enablePromise(true);
+const db = SQLite.openDatabase(
+      {
+        name: 'solveProblem.sqlite3',
+        createFromLocation:  '~www/solveProblem.sqlite3',
+        location: 'Library',
+      },
+      (DB) => {
+          console.log('success opening db');
+      },
+      (err)=>{
+          console.log(err);
+      }
+);      
+
+
 //  route.params
 const FavorList = ({navigation, route}) =>{
-  SQLite.DEBUG(true);
-  //SQLite.enablePromise(true);
-  const db = SQLite.openDatabase(
-        {
-          name: 'solveProblem.db',
-          createFromLocation:  '~www/solveProblem.db',
-          location: 'Library',
-        },
-        (DB) => {
-            console.log('success opening db');
-        },
-        (err)=>{
-            console.log(err);
-        }
-  );      
-
+ 
 
     
     //const [params]
