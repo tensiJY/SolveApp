@@ -127,12 +127,26 @@ myApp.modules.api = function() {
         const _res = await _asyncApiCallPost(_u, _options);
         return _res;
     }
+
+    /**
+     * 문제 전체 가져오기
+     */
+
+     const _getDataAll = async (data) =>{
+        let _u = _url+'/reg/getDataAll';
+        _options.body = JSON.stringify(data);
+        //console.log(data);
+        const _res = await _asyncApiCallPost(_u, _options);
+        return _res;
+        
+     }
 	
 	return { 
         //asyncApiCall : _asyncApiCall    //  동기
         regInsert : _regInsert,
         getExamList : _getExamList,
-        getRegList:_getRegList
+        getRegList:_getRegList,
+        getDataAll : _getDataAll
 	}; 
 }();
 

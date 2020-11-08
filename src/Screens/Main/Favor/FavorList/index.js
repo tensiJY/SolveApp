@@ -3,14 +3,11 @@ import {SafeAreaView, FlatList, View, Text, StyleSheet, Alert, Image, TouchableO
 
 import Sql from '../../../../Components/Utils/SqlQuery'
 
-
 //  route.params
 const FavorList = ({navigation, route}) =>{
-
-  
-    
-  
-  const [favorList, setFavorList] = useState([]);
+   
+    //const [params]
+    const [favorList, setFavorList] = useState([]);
 
        
     
@@ -30,12 +27,16 @@ const FavorList = ({navigation, route}) =>{
 
     useEffect(()=>{
       init();
+
+      
     },[]);
 
     const init =  async ()=>{
       
-      var _d =  await new Sql().SelectQuery();
-      console.log(_d.length)
+      var _d =  await new Sql().selectQuery();
+      
+      console.log('init')
+      console.log(_d)
       
     }
 
